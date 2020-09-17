@@ -1,0 +1,8 @@
+{
+  "name": "2020-test-front",
+  "description": "Exercice d'évaluation pour le poste de développeur Front-End",
+  "private": true,
+  "dependencies": {
+    "webpack": "^4.44.1"
+  }
+}
