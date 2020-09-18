@@ -3,12 +3,12 @@ const App = {
 
     return {
       limitBeers: 60,
+      loadDecal: 1500,
       loadBeer: false,
       beers: [],
       modal: {},
       lastId: "",
       itemShow: "",
-      contentHeight:0,
       textBackground: "beers "
     };
 
@@ -25,11 +25,7 @@ const App = {
   },
   mounted() {
 
-    this.modal = {
-      content: document.getElementById("content"),
-      modal: document.getElementById("modal"),
-      cross: document.getElementById("cross")
-    };
+    this.modal.cross = document.getElementById("cross");
 
     this.modal.cross.addEventListener("click", () => {
       this.hideModal();
@@ -40,9 +36,9 @@ const App = {
       this.addBackground();
     });
 
-    // this.$nextTick(() => {
-      this.addBackground()
-    // })
+
+    this.$refs.content.setAttribute("data-text", this.textBackground)
+
 
   },
   created() {
@@ -53,7 +49,7 @@ const App = {
   methods: {
     resize(){
 
-      // let divs = document.getElementById("flexFont")
+      // let divs = this.$refs.flexFont
       // let relFontsize = divs.offsetWidth*0.05;
       // divs.style.fontSize = relFontsize+'px';
 
@@ -64,55 +60,34 @@ const App = {
 
       this.resize()
 
-      this.modal.content.style.setProperty("transform", "translate(-100%, 0)");
-      this.modal.modal.style.setProperty("transform", "translate(-100%, 0)");
+      this.$refs.content.style.setProperty("transform", "translate(-100%, 0)");
+      this.$refs.modal.style.setProperty("transform", "translate(-100%, 0)");
       this.modal.cross.style.setProperty("opacity", "1");
 
       let body = document.body;
       body.style.setProperty("overflow", "hidden");
 
     },
-
     hideModal() {
       let body = document.body;
 
-      this.modal.content.style.setProperty("transform", "translate(0, 0)");
-      this.modal.modal.style.setProperty("transform", "translate(0, 0)");
+      this.$refs.content.style.setProperty("transform", "translate(0, 0)");
+      this.$refs.modal.style.setProperty("transform", "translate(0, 0)");
       this.modal.cross.style.setProperty("opacity", "0");
 
       body.style.setProperty("overflow", "inherit");
     },
-
     bottom() {
-
-      let scrollY = window.scrollY;
-      let visible = document.documentElement.clientHeight;
-      let pageHeight = document.documentElement.scrollHeight;
-      let bottomOfPage = visible + scrollY >= pageHeight ;
-      // console.log(scrollY)
-      // console.log(visible)
-      // console.log(pageHeight)
-
-      return bottomOfPage || pageHeight >= visible;
-
+      return window.scrollY + this.loadDecal >= this.$refs.content.offsetHeight;
     },
-
     addBackground() {
-      let body,content;
 
-      body = document.body
-      content = document.getElementById("content");
-
-      let bodyBefor = window.getComputedStyle(content, "before");
+      let bodyBefor = window.getComputedStyle(this.$refs.content, "before");
       let heightBody = bodyBefor.getPropertyValue("height").match(/\d+/)[0]
       let contentBoby = bodyBefor.getPropertyValue("content").match(/[a-z ]+/)[0]
 
-      let limitBg = (1500 + window.scrollY) > parseInt(heightBody)
-
-      if (limitBg ){
-
-        content.setAttribute("data-text", contentBoby + this.textBackground)
-
+      if ((this.loadDecal + window.scrollY) > parseInt(heightBody) ){
+        this.$refs.content.setAttribute("data-text", contentBoby + this.textBackground)
       }
 
     },
@@ -127,18 +102,13 @@ const App = {
             this.beers.push(item);
           })
 
-          this.lastId = api[api.length - 1].id;
+            this.lastId = api[api.length - 1].id;
 
-          if (this.bottom()) {
-            setTimeout(function () { this.addBeers()}.bind(this), 1000)
-            this.loadBeer = false;
-          }
         });
       }
 
     },
   }
-
 };
 
 
