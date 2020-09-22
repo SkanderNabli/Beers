@@ -1,5 +1,12 @@
 <?php
 
+$jsonFile = file_get_contents("./assets/manifest.json") ;
+if ($jsonFile){
+    $json = json_decode($jsonFile, true);
+}else{
+    $json["main.css"] = "./assets/css/main.css";
+    $json["main.js"] = "./assets/js/bundle.js";
+}
 
 ?>
 <html lang="fr">
@@ -7,10 +14,10 @@
 
     <meta charset="UTF-8">
     <title>Test Troa</title>
-    <link rel="icon" type="image/png" href="assets/img/AppleBeer.png" />
+    <link rel="icon" type="image/png" href="assets/img/AppleBeer.png"/>
     <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <link rel="stylesheet" href="assets/css/fonts/fonts.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="<?=$json['main.css']?>">
 
 </head>
 <body>
@@ -26,6 +33,7 @@
 <div id="app" class="app">
 
     <section class="background" ref="content" id="content" data-text="">
+
         <div v-for="beer in beers" class="beer-items">
 
             <div class="beer-info">
@@ -40,6 +48,7 @@
             </div>
 
         </div>
+
     </section>
 
     <div id="modal" ref="modal" class="modal">
@@ -105,7 +114,7 @@
 
 <script src='https://unpkg.com/vue@next'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js'></script>
-<script src="assets/js/app.js"></script>
+<script src="<?=$json['main.js']?>"></script>
 
 </body>
 </html>

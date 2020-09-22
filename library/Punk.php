@@ -11,6 +11,7 @@ Class Punk {
     private $client;
     private $data=[];
     private $rangeCall=10;
+    private $rangeSend=10;
     private $exclude =[
         null,
         "https://images.punkapi.com/v2/keg.png",
@@ -72,7 +73,13 @@ Class Punk {
                   "food_pairing" => $item["food_pairing"]
               ];
 
-              array_push($this->data,$beer);
+              
+              if (count($this->data) < $this->rangeSend){
+                  array_push($this->data,$beer);
+              }else{
+                  break;
+              }
+
 
 //              push item si l'ont veux avoir toutes les données
 //              array_push($this->data,$item);
@@ -89,15 +96,13 @@ Class Punk {
       $this->filterBeer($callPage);
 
 //    verification si l'ont as assez items a afficher
-      if(count($this->data) >= 8){
+      if(count($this->data) >= $this->rangeSend){
           return json_encode($this->data);
       }
 //    sinon on relance une la method pour ajouter des items dans $this->data
       else{
-
           $lastId= end($this->data)["id"];
           return $this->getBeers($lastId);
-
       }
 
   }

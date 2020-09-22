@@ -2,7 +2,30 @@
   "name": "2020-test-front",
   "description": "Exercice d'évaluation pour le poste de développeur Front-End",
   "private": true,
+  "scripts": {
+    "dev": "SET NODE_ENV=dev & webpack ",
+    "prod": "webpack & php -S localhost:8000 -t public/ "
+  },
   "dependencies": {
-    "webpack": "^4.44.1"
+    "autoprefixer": "^10.0.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.4",
+    "webpack-manifest-plugin": "^2.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^4.3.0",
+    "mini-css-extract-plugin": "^0.11.2",
+    "postcss": "^8.0.6",
+    "postcss-loader": "^4.0.2",
+    "sass": "^1.26.11",
+    "sass-loader": "^10.0.2",
+    "terser-webpack-plugin": "^4.2.2",
+    "vue-loader": "^15.9.3",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
   }
 }
