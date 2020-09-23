@@ -28,11 +28,11 @@ Class Punk {
 
   }
 
-  private function callApi($select): ?string
+  private function callApi($select)
   {
 
       return $this->client->request("GET", self::API_URL.$select,[
-          'verify' => dirname(__DIR__) . DIRECTORY_SEPARATOR ."public". DIRECTORY_SEPARATOR ."cacert.pem",
+          'verify' => dirname(__DIR__) . DIRECTORY_SEPARATOR ."cacert.pem",
           'content-type' => 'application/json',
           'Accept' => 'application/json'
       ])->getBody();
@@ -73,13 +73,12 @@ Class Punk {
                   "food_pairing" => $item["food_pairing"]
               ];
 
-              
+
               if (count($this->data) < $this->rangeSend){
                   array_push($this->data,$beer);
               }else{
                   break;
               }
-
 
 //              push item si l'ont veux avoir toutes les données
 //              array_push($this->data,$item);

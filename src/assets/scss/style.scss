@@ -223,6 +223,40 @@ section .beer-items:first-child {
   width:150px
 }
 
+.returnTop {
+  position: fixed;
+  bottom: 85px;
+  right: 20px;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.7);
+  width: 50px;
+  height: 50px;
+  opacity: 0;
+  display: block;
+  text-decoration: none;
+  border-radius: 35px;
+  transition: all 0.3s ease;
+  cursor: pointer
+}
+
+.returnTop i {
+  color: #fff;
+  margin: 0;
+  position: relative;
+  left: 16px;
+  top: 13px;
+  font-size: 19px;
+  transition: all 0.3s ease;
+  cursor: pointer
+}
+.returnTop:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+.returnTop:hover i {
+  color: #FFCF00;
+  top: 10px
+}
+
 .cross {
   opacity:0;
   cursor: pointer;

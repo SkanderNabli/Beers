@@ -1,6 +1,14 @@
 <?php
 
 
+if (file_exists("./assets/manifest.json") ){
+    $jsonFile = file_get_contents("./assets/manifest.json");
+    $json = json_decode($jsonFile, true);
+}else{
+    $json["main.css"] = "./assets/css/main.css";
+    $json["main.js"] = "./assets/js/bundle.js";
+}
+
 ?>
 <html lang="fr">
 <head>
@@ -9,8 +17,9 @@
     <title>Test Troa</title>
     <link rel="icon" type="image/png" href="assets/img/AppleBeer.png"/>
     <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/fonts/fonts.css">
-    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="<?=$json['main.css']?>">
 
 </head>
 <body>
@@ -97,6 +106,8 @@
             </div>
         </div>
     </div>
+
+    <a href="#" ref="arrow" @click.prevent="scrollToTop()" class="returnTop"><i class="fa fa-chevron-up"></i></a>
 </div>
 
 
@@ -107,7 +118,7 @@
 
 <script src='https://unpkg.com/vue@next'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js'></script>
-<script src="./assets/js/app.js"></script>
+<script src="<?=$json['main.js']?>"></script>
 
 </body>
 </html>

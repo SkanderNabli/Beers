@@ -2,14 +2,15 @@ const App = {
   data() {
 
     return {
+      textBackground: "beers ",
       limitBeers: 60,
       loadDecal: 1500,
-      loadBeer: false,
+      heightShowReturnTop: 2500,
       beers: [],
-      modal: {},
-      lastId: 1,
+      modalCross: "",
+      currentId: 1,
       itemShow: "",
-      textBackground: "beers "
+      loadBeer: false
     };
 
   },
@@ -21,17 +22,22 @@ const App = {
       }
 
     },
-
   },
   mounted() {
 
-    this.modal.cross = document.getElementById("cross");
-
-    this.modal.cross.addEventListener("click", () => {
+    this.modalCross = document.getElementById("cross");
+    this.modalCross.addEventListener("click", () => {
       this.hideModal();
     });
 
     window.addEventListener("scroll", () => {
+
+      if (window.scrollY >= this.heightShowReturnTop) {
+        this.$refs.arrow.style.opacity = "1";
+      } else {
+        this.$refs.arrow.style.opacity = "0";
+      }
+
       this.loadBeer = this.bottom();
       this.addBackground();
     });
@@ -41,8 +47,7 @@ const App = {
       this.addBackground();
     });
 
-    this.$refs.content.setAttribute("data-text", this.textBackground+this.textBackground)
-
+    this.$refs.content.setAttribute("data-text", this.textBackground + this.textBackground)
 
   },
   created() {
@@ -51,34 +56,47 @@ const App = {
 
   },
   methods: {
-    resize() {
-
-      // let divs = this.$refs.flexFont
-      // let relFontsize = divs.offsetWidth*0.05;
-      // divs.style.fontSize = relFontsize+'px';
-
-    },
     showModal(id) {
 
       this.itemShow = this.beers.find(item => item.id === id);
 
-      this.resize()
+      this.$refs.arrow.style.opacity = "0";
 
-      this.$refs.content.style.setProperty("transform", "translate(-100%, 0)");
-      this.$refs.modal.style.setProperty("transform", "translate(-100%, 0)");
-      this.modal.cross.style.setProperty("opacity", "1");
+      this.modalCross.style.opacity = "1";
+      this.$refs.content.style.transform = this.$refs.modal.style.transform = "translate(-100%, 0)" ;
 
-      let body = document.body;
-      body.style.setProperty("overflow", "hidden");
+      document.body.style.overflow= "hidden";
 
     },
     hideModal() {
 
-      this.$refs.content.style.setProperty("transform", "translate(0, 0)");
-      this.$refs.modal.style.setProperty("transform", "translate(0, 0)");
-      this.modal.cross.style.setProperty("opacity", "0");
+      if (window.scrollY >= this.heightShowReturnTop) {
+        this.$refs.arrow.style.opacity = "1";
+      }
+      this.modalCross.style.opacity = "0";
+      this.$refs.content.style.transform = this.$refs.modal.style.transform = "translate(0, 0)" ;
 
-      document.body.style.setProperty("overflow", "inherit");
+      document.body.style.overflow="inherit";
+
+    },
+    scrollToTop() {
+
+      let cosParameter = document.scrollingElement.scrollTop / 2;
+      let scrollCount = 0, oldTimestamp = null;
+
+      function step(newTimestamp) {
+        if (oldTimestamp !== null) {
+
+          scrollCount += Math.PI * (newTimestamp - oldTimestamp) / 1000;
+          if (scrollCount >= Math.PI) return document.scrollingElement.scrollTop = 0;
+          document.scrollingElement.scrollTop = cosParameter + cosParameter * Math.cos(scrollCount);
+
+        }
+        oldTimestamp = newTimestamp;
+        window.requestAnimationFrame(step);
+      }
+
+      window.requestAnimationFrame(step);
 
     },
     bottom() {
@@ -103,14 +121,14 @@ const App = {
 
       if (this.beers.length < this.limitBeers) {
 
-        axios.get("http://localhost:8000/endpoint.php?id=" + this.lastId).then(response => {
+        axios.get("http://localhost:8000/endpoint.php?id=" + this.currentId).then(response => {
 
           let api = response.data;
 
           api.forEach(item => {
             this.beers.push(item);
           })
-          this.lastId = api[api.length - 1].id;
+          this.currentId = api[api.length - 1].id;
 
         });
       }
@@ -118,6 +136,5 @@ const App = {
     },
   }
 };
-
 
 Vue.createApp(App).mount("#app");
