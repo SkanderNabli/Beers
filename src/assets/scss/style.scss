@@ -62,7 +62,7 @@ header > div {
 
 .iconBeers:hover {
   animation:shaken 2s cubic-bezier(.36,.07,.19,.97) both;
-  transform:translate3d(0,0,0)
+  transform:translate(0,0)
 }
 
 footer {
@@ -93,11 +93,6 @@ footer {
   margin:20px
 }
 
-.app {
-  transition-property:left;
-  transition:left .6s cubic-bezier(0.67,0.02,0.2,0.97)
-}
-
 .background::before {
   content:attr(data-text);
   width:100%;
@@ -124,14 +119,15 @@ section {
   margin-left:auto;
   margin-right:auto;
   right:0;
-  left:0;
+  left:100%;
+  opacity: 0;
   min-width:335px;
   max-width:1000px;
   position:absolute;
-  transform:translate(0,0);
+  transform:translateX(0);
   top:64px;
   padding-bottom:120px;
-  transition-property:translate;
+  transition-property:transfom;
   transition:.6s cubic-bezier(0.67,0.02,0.2,0.97)
 }
 
@@ -265,7 +261,7 @@ section .beer-items:first-child {
   align-items:center;
   overflow:hidden;
   left:50%;
-  transform:translate(-50%,0);
+  transform:translateX(-50%);
   right:32px;
   margin:0;
   width:34px;
@@ -298,11 +294,10 @@ section .beer-items:first-child {
   width:100%;
   height:calc(100% - 138px);
   padding:73px 0;
-  transform:translate(0,0);
+  transform:translateX(0);
   display:flex;
   left:100%;
-  transition-property:translate;
-  transition:.6s cubic-bezier(0.67,0.02,0.2,0.97)
+  transition:transform .6s cubic-bezier(0.67,0.02,0.2,0.97)
 }
 
 .modal-img {

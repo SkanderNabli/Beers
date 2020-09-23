@@ -63,7 +63,7 @@ const App = {
       this.$refs.arrow.style.opacity = "0";
 
       this.modalCross.style.opacity = "1";
-      this.$refs.content.style.transform = this.$refs.modal.style.transform = "translate(-100%, 0)" ;
+      this.$refs.content.style.transform = this.$refs.modal.style.transform = "translateX(-99%)" ;
 
       document.body.style.overflow= "hidden";
 
@@ -74,7 +74,7 @@ const App = {
         this.$refs.arrow.style.opacity = "1";
       }
       this.modalCross.style.opacity = "0";
-      this.$refs.content.style.transform = this.$refs.modal.style.transform = "translate(0, 0)" ;
+      this.$refs.content.style.transform = this.$refs.modal.style.transform = "initial" ;
 
       document.body.style.overflow="inherit";
 
@@ -128,7 +128,11 @@ const App = {
           api.forEach(item => {
             this.beers.push(item);
           })
+
           this.currentId = api[api.length - 1].id;
+
+          this.$refs.content.style.left = "0";
+          this.$refs.content.style.opacity = "1";
 
         });
       }
