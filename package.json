@@ -3,6 +3,7 @@
   "description": "Exercice d'évaluation pour le poste de développeur Front-End",
   "private": true,
   "scripts": {
+    "installer": "npm install && composer install",
     "copy": "cp -r ./src/ ./public/ ",
     "dev": "start php -S localhost:8000 -t src/ && SET NODE_ENV=dev && webpack",
     "prod": "npm run copy && webpack && php -S localhost:8000 -t public/"
